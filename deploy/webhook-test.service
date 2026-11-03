@@ -1,0 +1,31 @@
+# /etc/systemd/system/webhook-test.service
+#
+#   sudo cp deploy/webhook-test.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now webhook-test
+#   journalctl -u webhook-test -f
+[Unit]
+Description=Liqbeacon webhook test receiver
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=webhook
+Group=webhook
+WorkingDirectory=/opt/webhook-test
+# .env is read by the app itself (dotenv), relative to WorkingDirectory.
+ExecStart=/usr/bin/node dist/server.js
+Restart=always
+RestartSec=3
+Environment=NODE_ENV=production
+
+# Hardening: the process only needs to write its own data directory.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/webhook-test/data
+
+[Install]
+WantedBy=multi-user.target
