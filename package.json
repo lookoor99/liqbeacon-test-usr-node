@@ -1,0 +1,28 @@
+{
+  "name": "liqbeacon-webhook-test",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A real-world Liqbeacon webhook receiver, for end-to-end delivery testing.",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "send-test": "tsx scripts/send-test.ts"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@liqbeacon/sdk": "file:vendor/liqbeacon-sdk-1.0.0.tgz",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.10",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
